@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define GREAT 90
+#define BAD 70
+
+typedef struct STUDENT {
+	char name[8];
+	int lang, math, eng;
+}ST;
+
+void Mal(ST ** arr, int N); //동적할당
+void Input(ST* arr, int N); //입력
+void Output(ST* arr, int N);//출력
+void G_OR_B(ST* arr);       //GREAT, BAD 판별 및 출력
+
+int main() {
+	ST* st;
+	int N, i;
+
+	scanf("%d", &N);
+
+	Mal(&st, N);
+	if (st == NULL) return -1;
+	
+	Input(st, N);
+	Output(st, N);
+
+	free(st);
+	return 0;
+}
+
+void Mal(ST** arr, int N) {
+	*arr = (ST*)malloc(sizeof(ST) * N);
+}
+void Input(ST* arr, int N) {
+	for(int i = 0; i < N; i++)
+		scanf("%s %d %d %d", arr[i].name, &arr[i].lang, &arr[i].eng, &arr[i].math);
+}
+void Output(ST* arr, int N) {
+	for (int i = 0; i < N; i++) {
+		double avg = (arr[i].lang + arr[i].eng + arr[i].math) / 3.0;
+		printf("%s %.1f", arr[i].name, avg);
+		G_OR_B(&arr[i]);
+		printf("\n");
+	}
+}
+void G_OR_B(ST* arr) {
+	if (arr->lang >= GREAT || arr->eng >= GREAT || arr->math >= GREAT)
+		printf(" GREAT");
+	if (arr->lang < BAD || arr->eng < BAD || arr->math < BAD)
+		printf(" BAD");
+}

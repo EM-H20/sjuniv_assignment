@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void Mal(int** arr, int N);
+void Input(int* arr, int N);
+
+int main() {
+	int N, *arr1, *arr2;
+
+	scanf("%d", &N);
+
+	Mal(&arr1, N);
+	if (arr1 == NULL)
+		return -1;
+
+	Mal(&arr2, N);	
+	if (arr2 == NULL)
+		return -1;
+
+	Input(arr1, N);
+	Input(arr2, N);
+
+	for (int i = 0; i < N; i++)
+		printf(" %d", arr1[i] + arr2[N - i - 1]);
+
+	free(arr1);
+	free(arr2);
+	return 0;
+}
+void Mal(int** arr, int N) {
+	*arr = (int*)malloc(sizeof(int) * N);
+}
+void Input(int* arr, int N) {
+	for (int i = 0; i < N; i++)
+		scanf("%d", &arr[i]);
+}

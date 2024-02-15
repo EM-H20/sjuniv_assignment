@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main() {
+	char* str, tmp[101];
+
+	scanf("%s", tmp);
+	int len = strlen(tmp);
+
+	str = (char*)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return -1;
+
+	strcpy(str, tmp);
+	printf("%s\n", str);
+
+	for (int i = 0; i < len - 1; i++) {
+		for (int j = 0; j < len - 1; j++) {
+			char ctmp = str[j];
+			str[j] = str[j + 1];
+			str[j + 1] = ctmp;
+		}
+		printf("%s\n", str);
+	}
+	free(str);
+	return 0;
+}
