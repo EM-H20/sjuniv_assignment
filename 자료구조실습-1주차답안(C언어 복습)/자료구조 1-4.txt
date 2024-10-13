@@ -4,7 +4,7 @@
 int main() {
 	char str[101]; //최대100, 널문자 + 1
 
-	scanf("%s", str); //문자입력
+	scanf("%s", str); //문자열입력
 	
 	int str_len = (int)strlen(str);
 
