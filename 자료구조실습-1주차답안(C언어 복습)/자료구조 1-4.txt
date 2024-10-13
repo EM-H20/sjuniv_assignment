@@ -2,26 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 int main() {
-	char* str, tmp[101];
+	char str[101]; //최대100, 널문자 + 1
 
-	scanf("%s", tmp);
-	int len = strlen(tmp);
+	scanf("%s", str); //문자입력
+	
+	int str_len = (int)strlen(str);
 
-	str = (char*)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return -1;
-
-	strcpy(str, tmp);
-	printf("%s\n", str);
-
-	for (int i = 0; i < len - 1; i++) {
-		for (int j = 0; j < len - 1; j++) {
-			char ctmp = str[j];
-			str[j] = str[j + 1];
-			str[j + 1] = ctmp;
-		}
+	
+	for (int i = 0; i < str_len; i++) {
 		printf("%s\n", str);
-	}
-	free(str);
+		char tmp = str[0];
+
+		for (int j = 0; j < str_len - 1; j++) 
+			str[j] = str[j + 1];		
+
+		str[str_len - 1] = tmp;		
+	}	
 	return 0;
 }
