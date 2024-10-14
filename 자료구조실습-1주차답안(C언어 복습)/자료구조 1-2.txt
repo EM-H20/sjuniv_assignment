@@ -1,30 +1,31 @@
 #include <stdio.h>
 
-int ABC(int* arr, int k) {
+int ABC(int* arr, int k) { //인자 : int 배열, 정수 k 
 	int max = arr[k], idx = k;
 
-	for (int i = k; i < 10; i++) {
-		if (arr[i] > max) {
-			max = arr[i];
-			idx = i;
+	//배열의 k번째 정수부터 마지막 정수 중 가장 큰 정수를 찾고. 이를 k번째 위치의 정수와 교환.
+	for (int i = k; i < 10; i++) { 
+		if (arr[i] > max) { //가장 큰 정수 찾음.
+			max = arr[i]; //max 값 교체
+			idx = i; //위치 index 저장
 		}
 	}
-	int tmp = arr[k];
+	int tmp = arr[k]; //위치 교환
 	arr[k] = arr[idx];
 	arr[idx] = tmp;
 }
 int main() {
 	int arr[10];
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) { //입력
 		scanf("%d", &arr[i]);
 	}
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) { //ABC함수 실행
 		ABC(arr, i);
 	}
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) { //출력
 		printf("%2d", arr[i]);
 	}
 	return 0;
