@@ -6,17 +6,17 @@ int main() {
 
 	scanf("%s", str); //문자열입력
 	
-	int str_len = (int)strlen(str);
+	int str_len = (int)strlen(str); //문자열 길이
 
 	
-	for (int i = 0; i < str_len; i++) {
-		printf("%s\n", str);
-		char tmp = str[0];
+	for (int i = 0; i < str_len; i++) { //문자열 길이만큼 반복
+		printf("%s\n", str); //출력
+		char tmp = str[0]; //왼쪽으로 한칸씩 shift하기 때문에 첫 번째 배열 값 저장
 
 		for (int j = 0; j < str_len - 1; j++) 
-			str[j] = str[j + 1];		
+			str[j] = str[j + 1]; //왼쪽으로 shift
 
-		str[str_len - 1] = tmp;		
+		str[str_len - 1] = tmp; //맨 뒤에 맨 앞에 있는 값 변경
 	}	
 	return 0;
 }
