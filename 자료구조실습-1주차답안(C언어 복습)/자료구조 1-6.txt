@@ -1,27 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define LEN 5
+
 #define SIZE_NAME 10
+#define STUDENT_LEN 5
 
-typedef struct STUDENT {
-	char name[SIZE_NAME];
-	int score;
-}ST;
+typedef struct Student_Information{ //학생의 이름, 점수로 구성된 구조체.
+	int score;		//학생의 점수
+	char name[SIZE_NAME];  //학생의 이름. 공백없이 최대 9개. 공백문자 널 포함해서 size는 10
+}S_I;
+
+
 int main() {
-	ST st[LEN];
-	int i;
-	double avg = 0;
+	S_I st[STUDENT_LEN]; //학생수만큼 구조체 값 정의
+	double average = 0; //평균값
 
-	for (i = 0; i < LEN; i++) {
-		scanf("%s %d", st[i].name, &st[i].score);
-		avg += st[i].score;
+
+	for (int i = 0; i < STUDENT_LEN; i++) {
+		scanf("%s %d", st[i].name, &st[i].score); //이름과 점수 입력
+		average += st[i].score; //점수 합산.
 	}
-	avg /= LEN;
 
-	for (i = 0; i < LEN; i++)
-		if (st[i].score <= avg)
+	average /= STUDENT_LEN; //평균 계산
+	
+	for (int i = 0; i < STUDENT_LEN; i++)  
+		if (average >= st[i].score) //평균이하면 출력
 			printf("%s\n", st[i].name);
+	
 
 	return 0;
 }
