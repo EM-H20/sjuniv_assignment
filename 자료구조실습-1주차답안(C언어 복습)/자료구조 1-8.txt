@@ -2,53 +2,54 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define GREAT 90
-#define BAD 70
+/* 구조체 선언
+- 이름: 길이가 1 이상 7 이하인 공백을 포함하지 않는 문자열
+- 국어 성적, 영어 성적, 수학 성적: 각각 정수형 변수. 성적은 0 이상 100 이하인 정수
+- 평균 성적: 실수형 변수
+*/
+typedef struct STUDENT_INFORMATION { //학생 정보 구조체 선언
+	char name[8]; //공백문자 + 1
+	int lang, eng, math; //국어, 영어, 수학 점수
+	double avg; //평균값
+}STUDENT_INFORMATION;
 
-typedef struct STUDENT {
-	char name[8];
-	int lang, math, eng;
-}ST;
+void Create_array(STUDENT_INFORMATION**st,int N) { //동적할당 함수생성
+	*st = (STUDENT_INFORMATION*)malloc(sizeof(STUDENT_INFORMATION) * N); //크기 N만큼
+}
 
-void Mal(ST ** arr, int N); //동적할당
-void Input(ST* arr, int N); //입력
-void Output(ST* arr, int N);//출력
-void G_OR_B(ST* arr);       //GREAT, BAD 판별 및 출력
+void input_information(STUDENT_INFORMATION* st) {
+	scanf("%s %d %d %d", st->name, &st->lang, &st->eng, &st->math);
+	st->avg = (double)(st->lang + st->eng + st->math) / 3;
+}
 
 int main() {
-	ST* st;
-	int N, i;
+	int N;
+	STUDENT_INFORMATION* st;
 
-	scanf("%d", &N);
+	scanf("%d", &N); 
 
-	Mal(&st, N);
-	if (st == NULL) return -1;
-	
-	Input(st, N);
-	Output(st, N);
+	Create_array(&st, N);//함수 실행
+	if (st == NULL) //동적할당 실패시 -1 반환
+		return -1; 
 
-	free(st);
-	return 0;
-}
-
-void Mal(ST** arr, int N) {
-	*arr = (ST*)malloc(sizeof(ST) * N);
-}
-void Input(ST* arr, int N) {
 	for(int i = 0; i < N; i++)
-		scanf("%s %d %d %d", arr[i].name, &arr[i].lang, &arr[i].eng, &arr[i].math);
-}
-void Output(ST* arr, int N) {
+		input_information(&st[i]); //입력 함수
+	/*
+	* 평균은 소수 첫째 자리까지 출력
+		  GREAT 혹은 BAD는 다음 기준을 적용하여 출력: - 국어, 영어, 수학 성적 중 어느 한 과목이라도 90 이상일 경우 GREAT 출력
+		- 국어, 영어, 수학 성적 중 어느 한 과목이라도 70 미만일 경우 BAD 출력
+		- GREAT 여부를 BAD 여부보다 먼저 출력하며, GREAT과 BAD 모두 출력될 경우 공백으로 구분
+	*/
 	for (int i = 0; i < N; i++) {
-		double avg = (arr[i].lang + arr[i].eng + arr[i].math) / 3.0;
-		printf("%s %.1f", arr[i].name, avg);
-		G_OR_B(&arr[i]);
+		printf("%s %.1f", st[i].name, st[i].avg);
+		if (st[i].lang >= 90 || st[i].eng >= 90 || st[i].math >= 90)
+			printf(" GREAT");
+		if (st[i].lang < 70 || st[i].eng < 70 || st[i].math < 70)
+			printf(" BAD");
+
 		printf("\n");
 	}
-}
-void G_OR_B(ST* arr) {
-	if (arr->lang >= GREAT || arr->eng >= GREAT || arr->math >= GREAT)
-		printf(" GREAT");
-	if (arr->lang < BAD || arr->eng < BAD || arr->math < BAD)
-		printf(" BAD");
+		
+	free(st); //동적할당 해제
+	return 0;
 }
