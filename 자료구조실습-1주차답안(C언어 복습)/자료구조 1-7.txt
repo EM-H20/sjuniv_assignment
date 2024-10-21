@@ -1,37 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-void Mal(int** arr, int N);
-void Input(int* arr, int N);
-
+void Created_array(int** arr, int N) { //배열 동적할당 함수
+	*arr = (int*)malloc(sizeof(int) * N);
+}
+void Input(int* arr, int N) { //배열 값 입력 함수
+	for (int i = 0; i < N; i++)
+		scanf("%d", &arr[i]);
+}
 int main() {
-	int N, *arr1, *arr2;
+	int N, * arr1, * arr2; //변수 선언
 
-	scanf("%d", &N);
+	scanf("%d", &N); //N값 (배열크기) 입력
 
-	Mal(&arr1, N);
-	if (arr1 == NULL)
+	Created_array(&arr1, N); //동적할당 함수 실행
+	if (arr1 == NULL) //동적할당 실패시 -1 반환
 		return -1;
 
-	Mal(&arr2, N);	
+	Created_array(&arr2, N);
 	if (arr2 == NULL)
 		return -1;
 
-	Input(arr1, N);
+	Input(arr1, N); //배열 값 입력 함수 실행
 	Input(arr2, N);
 
 	for (int i = 0; i < N; i++)
-		printf(" %d", arr1[i] + arr2[N - i - 1]);
+		printf(" %d", arr1[i] + arr2[N - i - 1]); //역방향으로 더하는 공식
 
-	free(arr1);
+	free(arr1); //해제
 	free(arr2);
 	return 0;
-}
-void Mal(int** arr, int N) {
-	*arr = (int*)malloc(sizeof(int) * N);
-}
-void Input(int* arr, int N) {
-	for (int i = 0; i < N; i++)
-		scanf("%d", &arr[i]);
 }
