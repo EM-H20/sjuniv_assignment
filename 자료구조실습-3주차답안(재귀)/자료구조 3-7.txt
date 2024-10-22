@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <string.h>
+
+int Count(char* str, char s, int n) {
+	if (str[n] == '\0') return 0;
+	else if (str[n] == s) return 1 + Count(str, s, n + 1);
+	else return Count(str, s, n + 1);
+}
+int main() {
+	char str[101], s;
+	scanf("%s", str);
+	getchar();
+	scanf("%c", &s);
+
+	printf("%d", Count(str, s, 0));
+	return 0;
+}
