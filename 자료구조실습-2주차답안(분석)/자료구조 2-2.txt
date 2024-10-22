@@ -1,86 +1,89 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int mostOnes(int **arr, int n) {
-	int j = 0, idx = 0, i = 0;
-	
-	while (j < n && i < n) {
-		if (arr[i][j] == 1) {
-			j++;
-			idx = i;
-		}
-		else 
-			i++;		
-	}
-	return idx;	
-}
+int mostOnes(int** arr, int n); //가장 많은 1을 포함하는 행을 찾는 함수
+void InPut(int** arr, int n); //배열값 입력
+void OutPut(int** arr, int n);//배열값 출력
+int** Two_Malloc(int n); //이중포인터 동적할당
+int* One_Malloc(int n); //포인터 동적할당
+void Free(int** arr, int n); //동적할당 해제
+
 int main() {
-	int** arr, N;
-	scanf("%d", &N);
+	int** arr; //변수 선언
+	int n;
 
-	arr = (int**)malloc(sizeof(int*) * N);
-	for (int i = 0; i < N; i++)
-		arr[i] = (int*)malloc(sizeof(int) * N);
+	scanf("%d", &n); //n x n을 만들기 위해 n값 입력받음
 
-	for (int i = 0; i < N; i++)
-		for (int j = 0; j < N; j++)
-			scanf("%d", &arr[i][j]);
+	arr = Two_Malloc(n); //이중포인터 동적할당 함수
+	if (arr == NULL) //동적할당 실패시 -1 반환
+		return -1;
 
-	printf("%d\n", mostOnes(arr, N));
-
-	for (int i = 0; i < N; i++)
-		free(arr[i]);
-	free(arr);
-}
-
-
-
-
-----------------------------------------
-
-
-#include <iostream>
-using namespace std;
-
-int mostOnes(int** arr, int N) {
-	int row = 0, i = 0, j = 0;
-	while (i < N && j < N) {
-		if (arr[i][j] == 1) {
-			j++;
-			row = i;
-		}
-		else i++;
+	for (int i = 0; i < n; i++) {
+		arr[i] = One_Malloc(n); //포인터 동적할당 함수
+		if (arr[i] == NULL) //동적할당 실패시 -1 반환
+			return -1;
 	}
-	return row;
-}
-int main() {	
-	int** arr;
-	int N, i, j;
-
-	cin >> N;
 	
-	arr = new int* [N];
-	for (i = 0; i < N; i++)
-		arr[i] = new int[N];
 
-	for (i = 0; i < N; i++)
-		for (j = 0; j < N; j++)
-			cin >> arr[i][j];
+	InPut(arr, n); //입력함수
+	printf("\n");
+	OutPut(arr, n); //출력함수
 
-	cout << mostOnes(arr, N);
+	printf("%d\n", mostOnes(arr, n)); //함수 실행 후 출력
 
-	for (i = 0; i < N; i++)
-		delete[] arr[i];
-	delete[] arr;		
+	Free(arr, n); //해제
+	free(arr);
+
 	return 0;
 }
-/*
-1 1 1 1 0 0 0 0
-1 1 1 1 1 0 0 0
-1 0 0 0 0 0 0 0 
-1 1 1 1 1 1 0 0
-1 1 1 1 0 0 0 0
-0 0 0 0 0 0 0 0
-1 1 1 1 1 1 1 0
-1 1 1 1 1 0 0 0
-*/
+
+int mostOnes(int** arr, int n) { //가장 많은 1을 포함하는 행을 찾는 함수
+	int row = 0, jmax = 0; //변수 선언
+	int i = 0, j = 0;
+
+
+	while (i < n && j < n) { //배열 탐색, 
+		if (arr[i][j] == 1) { //1이 있으면 j개수 증가.
+			j++;
+			row = i; //행 번호 계산
+		}
+		else
+			i++; //1이 더 이상 없을 시 다음 행으로
+	}
+
+	return row; //1이 가장 많았던 행 번호 반환	
+}
+
+int** Two_Malloc(int n) { //이중포인터 동적할당
+	int** arr;
+	arr = (int**)malloc(sizeof(int*) * n); //동적할당 n만큼
+
+	return arr;
+}
+
+int* One_Malloc(int n) { //포인터 동적할당
+	int* arr;
+	arr = (int*)malloc(sizeof(int) * n); //동적할당 n만큼
+
+	return arr;
+}
+
+void InPut(int** arr, int n) {
+	for (int i = 0; i < n; i++) 
+		for (int j = 0; j < n; j++) 
+			scanf("%d", &arr[i][j]); //배열값 입력
+	
+}
+
+void OutPut(int** arr, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++)
+			printf("%d ", arr[i][j]); //배열값 출력
+		printf("\n");
+	}
+}
+
+void Free(int** arr, int n) { //동적할당 해제
+	for (int i = 0; i < n; i++) 
+		free(arr[i]);	
+}
