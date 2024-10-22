@@ -1,42 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
-int* prefixAverages1(int* arr, int n) {//O(n^2)
-	int* A = (int*)malloc(sizeof(int) * n);
-	for (int i = 0; i < n; i++) {
-		int sum = 0;
-		for (int j = 0; j <= i; j++) {
-			sum += arr[j];
-		}
-		A[i] = ((double)(sum) / (i + 1) + 0.5);
-	}
-	return A;
-}
-int* prefixAverages2(int* arr, int n) { //O(n)
-	int* A = (int*)malloc(sizeof(int) * n);
-	int sum = 0;
-	for (int i = 0; i < n; i++) {
-		sum += arr[i];
-		A[i] = ((double)(sum) / (i + 1) + 0.5);
-	}
-	return A;
-}
+
+int* prefixAverages1(int* arr, int n); //누적평균 함수 O(n^2)
+int* prefixAverages2(int* arr, int n); //누적평균 함수  O(n) 
+int* OneMalloc(int n); //포인터 동적할당
+void InPut(int* arr, int n); //입력 함수
+void OutPut(int* arr, int n); //출력 함수
+
 int main() {
-	int* arr, N;
-	scanf("%d", &N);
+	int n; //변수 선언
+	int* arr, * arr1, * arr2;
 
-	arr = (int*)malloc(sizeof(int) * N);
-	for (int i = 0; i < N; i++)
+	scanf("%d", &n); //배열 크기 입력
+
+	arr = OneMalloc(n); //동적할당
+	if (arr == NULL) //동적할당 실패시 -1 반환
+		return -1;
+	InPut(arr, n); //배열 값 입력
+
+	{  //누적함수 실행부분
+		arr1 = prefixAverages1(arr, n); //누적평균 함수 실행 (시간 복잡도 O(n^2))
+		if (arr1 == NULL) //동적할당 실패시 -1 반환
+			return -1;
+		OutPut(arr1, n); //
+
+		arr2 = prefixAverages2(arr, n);  //누적평균 함수 실행 (시간 복잡도 O(n))
+		if (arr2 == NULL) //동적할당 실패시 -1 반환
+			return -1;
+		OutPut(arr2, n);
+	}
+
+	free(arr); //동적할당 해제
+	free(arr1);
+	free(arr2);
+	return 0;
+}
+
+int* prefixAverages1(int* arr, int n) { //누적평균 함수
+	int sum;
+	int* A = OneMalloc(n);
+
+	for (int i = 0; i < n; i++) {  //O(n^2) 시간복잡도
+		sum = 0;
+		for (int j = 0; j < i + 1; j++) //누적해서 더한 후
+			sum += arr[j];
+		A[i] = (double)sum / (i + 1) + 0.5; //누적평균 계산해서 새로운 배열에 저장.
+	}
+
+	return A;
+}
+
+int* prefixAverages2(int* arr, int n) { //누적평균 함수 
+	int sum = 0;
+	int* A = OneMalloc(n);
+	
+	for (int i = 0; i < n; i++) {  //O(n) 시간복잡도
+		sum += arr[i];
+		A[i] = (double)sum / (i + 1) + 0.5;
+	}
+
+	return A;
+}
+int* OneMalloc(int n) { //포인터 동적할당
+	int* arr = (int*)malloc(sizeof(int) * n);
+
+	return arr;
+}
+
+void InPut(int* arr, int n) {
+	for (int i = 0; i < n; i++) //배열 n개만큼 입력
 		scanf("%d", &arr[i]);
+}
 
-	int* A = prefixAverages1(arr, N);
-	for (int i = 0; i < N; i++)
-		printf("%d ", A[i]);
-
+void OutPut(int* arr, int n) {
+	for (int i = 0; i < n; i++) //배열 n개만큼 출력
+		printf("%d ", arr[i]);
 	printf("\n");
-	A = prefixAverages2(arr, N);
-	for (int i = 0; i < N; i++)
-		printf("%d ", A[i]);
-
-	free(A);
-	free(arr);
 }
