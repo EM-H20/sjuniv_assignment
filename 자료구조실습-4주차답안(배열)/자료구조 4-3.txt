@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int** arr, N, i, j;
+	scanf("%d", &N);
+
+	arr = (int**)malloc(sizeof(int*) * N);
+	
+	for(i = 0; i < N; i++)
+		arr[i] = (int*)malloc(sizeof(int) * N);
+
+	int cnt = 1;
+	for (i = 0; i < N; i++) {
+		if (i % 2 == 0)
+			for (j = 0; j < N; j++)
+				arr[i][j] = cnt++;
+		else
+			for (j = N - 1; j >= 0; j--)
+				arr[i][j] = cnt++;
+	}
+
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++)
+			printf(" %d", arr[i][j]);
+		printf("\n");
+	}
+	for (i = 0; i < N; i++)
+		free(arr[i]);
+	free(arr);
+	return 0;
+}

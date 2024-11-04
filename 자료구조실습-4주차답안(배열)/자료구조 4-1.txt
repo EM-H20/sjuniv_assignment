@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void Solution(int *a, int *b) {
+	int* p = a, * q = b;
+	for (; p < q; p++, q--) {
+		int tmp = *p;
+		*p = *q;
+		*q = tmp;
+	}
+}
+int main() {
+	int N, * arr, M, a, b;
+	scanf("%d", &N);
+
+	arr = (int*)malloc(sizeof(int) * N);
+	for (int i = 0; i < N; i++)
+		scanf("%d", &arr[i]);
+
+	scanf("%d", &M);
+	for (int i = 0; i < M; i++) {
+		scanf("%d%d", &a, &b);
+		Solution(&arr[a], &arr[b]);
+	}
+	for (int i = 0; i < N; i++)
+		printf(" %d", arr[i]);
+	free(arr);
+	return 0;
+}

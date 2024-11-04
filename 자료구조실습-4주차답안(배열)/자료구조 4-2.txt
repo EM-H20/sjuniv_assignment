@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int* arr, int a, int b, int N) {
+	if (N == 0) return;
+	int c;
+	scanf("%d", &c);
+	swap(arr, b, c, N - 1);
+	int tmp = arr[a];
+	arr[a] = arr[b];
+	arr[b] = tmp;
+}
+
+int main() {
+	int N, X, a, b, * arr;
+	scanf("%d", &N);
+
+	arr = (int*)malloc(sizeof(int) * N);
+
+	for (int i = 0; i < N; i++)
+		scanf("%d", &arr[i]);
+
+	scanf("%d", &X);
+	scanf("%d %d", &a, &b);
+	swap(arr, a, b, X - 2);
+
+	for (int i = 0; i < N; i++)
+		printf(" %d", arr[i]);
+		
+	free(arr);
+}
