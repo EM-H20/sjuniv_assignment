@@ -1,17 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 
-int Count(char* str, char s, int n) {
-	if (str[n] == '\0') return 0;
-	else if (str[n] == s) return 1 + Count(str, s, n + 1);
-	else return Count(str, s, n + 1);
+int Count(char* str, char s, int n) { //특정 문자가 몇 번 나타나는 지 검사하는 재귀 함수
+
+	if (str[n] == '\0') return 0; //문자열을 전부 검사했을 때
+	else if (str[n] == s) return 1 + Count(str, s, n + 1); //특정 문자를 찾았을 때. 1 반환 후 재귀함수 실행
+	else return Count(str, s, n + 1); //특정 문자를 못 찾았을 때
+
 }
 int main() {
-	char str[101], s;
+	char str[101], s; //변수 입력
+	//조건 : 문자열은 100이하. 그러므로 널문자 포함인 101을 선언
 	scanf("%s", str);
-	getchar();
-	scanf("%c", &s);
+	getchar(); //공백문자 처리
 
-	printf("%d", Count(str, s, 0));
+	scanf("%c", &s); //특정 문자 입력
+
+	printf("%d", Count(str, s, 0)); //재귀 함수 실행
 	return 0;
 }
