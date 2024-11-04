@@ -1,22 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 #define Max(x, y) ((x) > (y)) ? (x) : (y)
 
-int MAX(int* arr, int n) {
-	if (n == 1) 
-		return arr[0];	
-	else 
-		return Max(MAX(arr, n - 1), arr[n - 1]);
+int solution(int *arr, int n); //최댓 값을 구하는 함수
+int main() {
+	int N, arr[20]; //변수 선언
+	
+	//조건 : N은 20 이하
+	scanf("%d", &N); //변수 입력
+	
+	for (int i = 0; i < N; i++) 
+		scanf("%d", &arr[i]);//정수 N개 입력
+
+	printf("%d\n", solution(arr, N)); //함수 실행
+	return 0;
 }
 
-int main() {
-	int N;
-	scanf("%d", &N);
-	
-	int* arr = (int*)malloc(sizeof(int) * N);
-	for (int i = 0; i < N; i++)
-		scanf("%d", &arr[i]);
-	printf("%d", MAX(arr, N));
-
-	free(arr);
+int solution(int *arr, int n) {	//각 자리의 수를 높은 자릿수부터 차례로 출력하는 재귀함수
+	if (n == 1)
+		return arr[0];
+	else
+		return Max(solution(arr, n - 1), arr[n - 1]);
+	// 예: (4, 1, 8, 3, 7)의 최댓값 ⇒ (4, 1, 8, 3)의 최댓값과 7 중 큰 값
 }
