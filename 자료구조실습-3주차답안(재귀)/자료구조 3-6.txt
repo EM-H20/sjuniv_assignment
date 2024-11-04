@@ -1,6 +1,7 @@
 #include <stdio.h>
-
-int gcd(int a, int b){
+ 
+int gcd(int a, int b) { //최대공약수(gcd)를 유클리드 호제법으로 구현
+	//한 수가 0이 되었을 때, 다른 수가 최대공약수
 	if (a == b)
 		return a;
 	else if (a > b)
@@ -9,8 +10,9 @@ int gcd(int a, int b){
 		return gcd(a, b - a);
 }
 int main() {
-	int a, b;
-	scanf("%d %d", &a, &b);
-	printf("%d\n", gcd(a, b));
+	int a, b; //변수 선언
+
+	scanf("%d %d", &a, &b); //변수 입력
+	printf("%d\n", gcd(a, b)); //함수 실행
 	return 0;
 }
