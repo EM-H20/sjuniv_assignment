@@ -1,14 +1,22 @@
-#include<stdio.h>
-int Solution(int N) {
-	if (N < 10)
-		printf("%d\n", N);
-	else {
-		printf("%d\n", N % 10);
-		Solution(N / 10);
-	}
-}
+#include <stdio.h>
+
+void solution(int n); //각 자리의 수를 낮은 자릿수부터 차례로 출력하는 재귀함수
 int main() {
-	int N;
-	scanf("%d", &N);
-	Solution(N);
+	int N; //변수 선언
+
+	scanf("%d", &N); //변수 입력
+	
+	
+	solution(N);
+
+	return 0;
+}
+
+void solution(int n) {//각 자리의 수를 낮은 자릿수부터 차례로 출력하는 재귀함수
+	if (n < 10)
+		printf("%d\n", n); //10보다 이하인 수 나올 때 출력
+	else {
+		printf("%d\n", n % 10);  //앞에 출력함으로써, 낮은 자리수부터 출력된다.
+		solution(n / 10); //10보다 작은 수 나올 때 까지 재귀실행
+	}
 }
