@@ -1,29 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Solution(int *a, int *b) {
-	int* p = a, * q = b;
-	for (; p < q; p++, q--) {
-		int tmp = *p;
+void Solution(int *start, int *end) { 
+	/*
+	index start 에서 index end까지 배열을 뒤집는 프로그램
+	
+	Args:
+		start (int) : 뒤집기 시작 인덱스 위치
+		end (int)   : 뒤집기 끝낼 인덱스 위치
+
+	Return:
+		void라 없음
+	*/
+	int* p = start, * q = end; //대신 사용할 변수
+
+	for (; p < q; p++, q--) { //p(start)보다 q(end)가 클 때만 반복실행
+		int tmp = *p; //각 변수 값 교환
 		*p = *q;
 		*q = tmp;
 	}
 }
+
 int main() {
-	int N, * arr, M, a, b;
-	scanf("%d", &N);
+	int N, M, start, end;
+	int* arr;	
+	/*
+	변수:
+		N (int) : 배열 개수
+		M (int) : 뒤집기 정보의 개수
+		*arr(int array) : 동적할당으로 N만큼 크기 받을 int 1차원 배열
+		start (int) : 뒤집기 시작할 index 값
+		end (int) : 뒤집기 끝낼 index 값		
+	*/
 
-	arr = (int*)malloc(sizeof(int) * N);
+	scanf("%d", &N); //배열 개수 입력
+	arr = (int*)malloc(sizeof(int) * N); //N만큼 1차원 int배열 크기로 동적할당
+	if (arr == NULL) //실패시 Return -1
+		return -1;
+
 	for (int i = 0; i < N; i++)
-		scanf("%d", &arr[i]);
+		scanf("%d", &arr[i]); //배열에 값 입력
 
-	scanf("%d", &M);
+	scanf("%d", &M); //뒤집기 정보의 개수 입력
+
 	for (int i = 0; i < M; i++) {
-		scanf("%d%d", &a, &b);
-		Solution(&arr[a], &arr[b]);
+		scanf("%d %d", &start, &end); //뒤집기 시작할 위치와 끝낼 위치 값 입력
+		Solution(&arr[start], &arr[end]); //뒤집기 함수 실행
 	}
+
 	for (int i = 0; i < N; i++)
-		printf(" %d", arr[i]);
-	free(arr);
+		printf(" %d", arr[i]); //최종 수열 출력
+
+	free(arr); //동적할당 해제
 	return 0;
 }
